@@ -7,6 +7,11 @@ var server = require('../lib/server');
 var request = require('supertest').agent,
   models = require('../models');
 
+var app;
+beforeEach(function() {
+    app = request(server);  
+});
+
 beforeAll(function() {
     models.sequelize.sync({ force: true });
 });
@@ -16,24 +21,19 @@ it('should have a test', function() {
 });
 
 describe('server', function() {
-    var app;
-    beforeEach(function() {
-        app = request(server);
-    });
-    
     it('should respond with "Hello world!" on /', function() {
         return request(server)
             .get('/')
             .expect(200, /Hello world!/);
     });
 
-    ['David', 'John', 'Lee'].forEach(function(name) {
-        it('should respond with "Hello, ' + name + '!" on /' + name, function(done) {
-            request(server)
-                .get('/' + name)
-                .expect(200, 'Hello, ' + name + '!', done);
-        });
-    });
+    // ['David', 'John', 'Lee'].forEach(function(name) {
+    //     it('should respond with "Hello, ' + name + '!" on /' + name, function(done) {
+    //         request(server)
+    //             .get('/' + name)
+    //             .expect(200, 'Hello, ' + name + '!', done);
+    //     });
+    // });
 });
 
 describe('login', function() {
@@ -167,6 +167,4 @@ describe('login', function() {
 //                     .expect(200, /Hi userLogin/) // <---- expect alert
 //             });
 //     });
-// })
-
-
+// });

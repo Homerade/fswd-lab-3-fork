@@ -1,11 +1,13 @@
 sudo: false
 dist: trusty
-
 language: node_js
 node_js:
-    - "7"
-    - "stable"
-
+- stable
 cache:
   directories:
-      - node_modules
+  - node_modules
+deploy:
+  provider: heroku
+  app: infinite-mesa-93436
+  api_key:
+    secure: OObYQkmhc27m0HRsSsWMKVpHnr4Q1MnwYrkT94/cO1igjGSjbM6PWlTu9mlXH6laE4XbeNSrDhGJxOLTnBTqbcLENYn2RZhWV1jntM7dhhD1/FjQq7tnlDrkCYtI9lx3WQdmoOjRBkgqoOcM5sHhES1cTfEjefwFbHJt/EMHF3KzFIj6Tf4GQRlPac/r3tm4hp/kcP430ZVna7+zTwd78V4XV9AhizusAgsuJgYyplss93XeHMEt4Bl1Tgzd9Far2HfZgJ2PULNw4PBDUO+Iqd9K+oA0zzdQMdxi91E2zOh8oV/9pzKFGZoKSe+ithNtm9SCeg6xJGWMIsTr3oQyiTnrTbuUwUR8WbieTcm7bXOejyytM7iOufEpDt6py7u/wuDySfYDyckbWXDrRSc20OcUoZxoae8rBJJeQ7UclT33euci2ebZ+QbrvVpux++i2PsEmLEDz21mPBW5Ddz+nm4jW4Hb69OtRoGbTIy6RFCIsnBkbSl13xKNQZ1fxCYH8zWyfrT5x0uSd9ycBQYKInJaUuv2TsHq7x2q4FRPjgy3eeMfuADNa22NwhnqdN/9Xe3gqoX3J21ZoFa6VMv5wK+jURHVnxKABkxaBKuY7c4y6gWea36UQbP+2l+8dV5hO+X7CmePDfJlBE9UyZ4268OVmML5oiE7yChcFR0GDug=
