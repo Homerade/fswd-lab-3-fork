@@ -1,6 +1,8 @@
 extends ../layout
 
 block body
+    h2 Login Here:
+    br
     form(action='/users/login' method='post')
         label(for='username') Username
         input(name='username' type='text')
