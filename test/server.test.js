@@ -4,7 +4,7 @@
 var server = require('../lib/server');
 
 // libraries
-var request = require('supertest'),
+var request = require('supertest').agent,
   models = require('../models');
 
 beforeAll(function() {
@@ -16,6 +16,11 @@ it('should have a test', function() {
 });
 
 describe('server', function() {
+    var app;
+    beforeEach(function() {
+        app = request(server);
+    });
+    
     it('should respond with "Hello world!" on /', function() {
         return request(server)
             .get('/')
@@ -33,10 +38,10 @@ describe('server', function() {
 
 describe('login', function() {
     it('should test that the login page loads', function() {
-        return app
-
-    })
-})
+        return app.get('/users/login')
+            .expect(200, /Login here/i);
+    });
+});
 
 // TESTS TO APP -- TO RUN AFTER FUNCTIONALITY IS COMPLETED
 
