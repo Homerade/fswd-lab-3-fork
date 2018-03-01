@@ -1,0 +1,36 @@
+html
+    head
+        title My page title
+        link(rel="stylesheet"
+             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+             crossorigin="anonymous")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js")
+        script(src='<script src="https://cdn.jsdelivr.net/npm/vue-resource@1.4.0"></script>')
+    
+    body
+        div.container#app
+            //- p(:title='tooltip') {{ message }}
+            //- button.btn.btn-primary(v-on:click='updateDate') update date
+
+            //- tasks
+            new-task(:tasks='tasks')
+            task-list(:tasks='tasks')
+        
+        //- using the app object to house all functionality:
+
+            //- input.form-control(type='text' v-model='newTask' placeholder='add new task here')
+            //- button.btn.btn-secondary(@click='addNewTask') Add task
+            //- ul  
+            //-     //- li(v-for='task in tasks') {{ task }}
+
+            //-     //- use your newly created vue element 'task' instead of li
+            //-     task(v-for='task in tasks' :name='task') {{ task }}
+            
+        div.container
+            if user
+                h1 Hi #{user.username}
+            block body
+                p Default body
+        
+        script(src="/app.js")        

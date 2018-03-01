@@ -1,7 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   var Task = sequelize.define('Task', {
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true,
+      }
+    },
     completedAt: DataTypes.DATE
   }, {
     scopes: {

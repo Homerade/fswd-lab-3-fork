@@ -168,3 +168,20 @@ describe('login', function() {
 //             });
 //     });
 // });
+
+// DR's EXAMPLE WITH ADDING USER TO DB BEFORE CHECKING IT
+
+// it('should warn if user exists', function() {
+        //     return models.User.create({ username: 'MyTestUser', password: 'whatever'})
+        //         .then(function() {
+        //             return app
+        //                 .post('/users/register')
+        //                 .type('form')
+        //                 .send({
+        //                     username: 'MyTestUser',
+        //                     password: '1234',
+        //                     password_confirm: '1234'
+        //                 })
+        //                 .expect(200, /Username already exists/);
+        //         });
+        // });

@@ -1,0 +1,19 @@
+html
+    head
+        title My page title
+        link(rel="stylesheet"
+             href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+             crossorigin="anonymous")
+        script(src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js")
+
+body
+        div.container#app
+            p(:title='tooltip') {{ message }}
+            button.btn.btn-primary(v-on:click='updateDate') update date
+        input.form-control(type='text' v-model='newTask' placeholder='add new task here')
+            button.btn.btn-secondary(@click='addNewTask') Add task
+            ul  
+                li(v-for='task in tasks') {{ task }}
+
+        script(src="/app.js")        

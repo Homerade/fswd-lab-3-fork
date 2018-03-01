@@ -2,8 +2,12 @@ html
     head
         title My page title
     body
-        div
+        div.container#app
+            new-task(@addtask="addNewTask")
+            task-list(:tasks="tasks")
+        div.container
             if user
                 h1 Hi #{user.username}
             block body
                 p Default body
+        script(src="/bundle.js")
