@@ -1,12 +1,12 @@
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 // import $ from 'jquery';
-import Vue from 'vue'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
+import Vue from 'vue';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
-import NewTask from './NewTask.vue'
-import Register from './Register.vue'
+import NewTask from './NewTask.vue';
+import Register from './Register.vue';
 
 Vue.use(VueAxios, axios);
 
@@ -32,7 +32,7 @@ Vue.component('TaskList', {
             alert('a task was deleted');
             this.$http.get('/tasks')
                 .then((response) => {
-                    this.tasks = response.body;
+                    this.tasks = response.data;
                 });
         }
     }
@@ -41,7 +41,8 @@ Vue.component('TaskList', {
 var app = new Vue({
     el: '#app',
     components: {
-        NewTask
+        NewTask,
+        Register
     },
     data: {
         tasks: [],
@@ -51,15 +52,20 @@ var app = new Vue({
         addNewTask: function(newTask) {
             this.$http.post('/tasks', { name: newTask })
                 .then((response) => {
-                    this.tasks.push(response.body);
+                    this.tasks.push(response.data);
                 });
-    },
-    
-        created: function() {
-            this.$http.get('/tasks', { name: newTask })
+        },
+        registerUser: function(details) {
+            this.$http.post('/users/register', details)
                 .then((response) => {
-                    this.tasks = response.body;
-                })
+                    this.user = response.data;
+                });
+        }
+    },
+    created: function() {
+        this.$http.get('/tasks')
+            .then((response) => {
+                this.tasks = response.data;
+            })
     }
-}
 });

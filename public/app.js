@@ -54,13 +54,18 @@ var app = new Vue({
                 .then(function(response) {
                     this.tasks.push(response.body);
                 });
-    },
-
-        created: function() {
-            this.$http.get('/tasks')
+        },
+        registerUser: function(details) {
+            this.$http.post('/users/register', details)
                 .then(function(response) {
-                    this.tasks = response.body;
-                })
+                    this.user = response.body;
+                });
+        }
+    },
+    created: function() {
+        this.$http.get('/tasks')
+            .then(function(response) {
+                this.tasks = response.body;
+            })
     }
-}
 });

@@ -7,11 +7,6 @@ var server = require('../lib/server');
 var request = require('supertest').agent,
   models = require('../models');
 
-var app;
-beforeEach(function() {
-    app = request(server);  
-});
-
 beforeAll(function() {
     models.sequelize.sync({ force: true });
 });
@@ -21,8 +16,13 @@ it('should have a test', function() {
 });
 
 describe('server', function() {
+    var app;
+    beforeEach(function() {
+        app = request(server);
+    });
+
     it('should respond with "Hello world!" on /', function() {
-        return request(server)
+        return app
             .get('/')
             .expect(200, /Hello world!/);
     });
@@ -34,144 +34,48 @@ describe('server', function() {
     //             .expect(200, 'Hello, ' + name + '!', done);
     //     });
     // });
-});
 
-describe('login', function() {
-    it('should test that the login page loads', function() {
-        return app.get('/users/login')
-            .expect(200, /Login here/i);
-    });
-});
+    describe('users', function() {
+        it('should present the registration form', function() {
+            return app
+                .get('/users/register')
+                .expect(200);
+        });
 
-// TESTS TO APP -- TO RUN AFTER FUNCTIONALITY IS COMPLETED
+        it('should register a user', function() {
+            return app
+                .post('/users/register')
+                .type('form')
+                .send({
+                    username: 'MyUsername',
+                    password: 'MyPassword',
+                    password_confirm: 'MyPassword',
+                    email: 'somebody@example.com'
+                })
+                .expect(302)
+                .expect('Location', '/users/welcome')
+                .then(function(response) {
+                    let cookies = response.headers['set-cookie'][0].split(',').map(item => item.split(';')[0]).join(';');
+                    return app
+                        .get('/users/welcome')
+                        .set('Cookie', cookies)
+                        .expect(/Hi MyUsername!/);
+                });
+        });
 
-// describe('register', function() {
-//     it('should register a user', function() {
-//         return app
-//             .post('/users/register')
-//             .type('form')
-//             .send({
-//                 username: 'testUsername',
-//                 password: 'testPassword',
-//                 password_confirm: 'testPassword'
-//             })
-//             .expect(302)
-//             .expect('Location', '/users/welcome')
-//             .then(function() {
-//                 return app
-//                     .get('/users/welcome')
-//                     .expect(200, /Hi testUsername!/);
-//             });
-//     });
-//     it('found an already existing user', function() {
-//         return app
-//             .post('/users/register')
-//             .type('form')
-//             .send({
-//                 username: 'testUsername',
-//                 password: 'testPassword',
-//                 password_confirm: 'testPassword'
-//             })
-//             .then(function() {
-//                 return app
-//                     .get('/users/register')
-//                     .expect(200, /user already exists/); // <---- expect alert
-//             }); 
-//         });
-//     it('password confirmation was not a match', function() {
-//         return app
-//             .post('/users/register')
-//             .type('form')
-//             .send({
-//                 username: 'testUsername',
-//                 password: 'testPassword',
-//                 password_confirm: 'testPassword'
-//             })
-//             .then(function() {
-//                 return app
-//                     .get('/users/register')
-//                     .expect(200, /passwords did not match/) // <---- expect alert
-//             });
-//     });
-//     it('found user already logged in', function() {
-//         return app
-//             .post('/users/register')
-//             .type('form')
-//             .send({
-//                 username: 'testUsername',
-//                 password: 'testPassword',
-//                 password_confirm: 'testPassword'
-//             })
-//             .then(function() {
-//                 return app
-//                     .get('/users/register')
-//                     .expect(200, /you are already registred and are currently logged in/)
-//             })
-//     })            
-// });
+        // it('should warn if passwords do not match', function() {
+        //     return app
+        //         .post('/users/register')
+        //         .type('form')
+        //         .send({
+        //             username: 'MyUsername',
+        //             password: '12345',
+        //             password_confirm: '56789'
+        //         })
+        //         .expect(200, /Passwords do not match/);
+        // });
 
-// describe('login', function() {
-//     it('should login the user', function() {
-//         return app
-//             .post('/users/login')
-//             .type('form')
-//             .send({
-//                 username: 'userLogin',
-//                 password: 'userPass'
-//             })
-//             .then(function() {
-//                 return app
-//                     .get('/users/welcome')
-//                     .expect(200, /Hi userLogin/)
-//             });
-//     });
-//     it('did not find the user', function() {
-//         return app
-//             .post('/users/login')
-//             .type('form')
-//             .send({
-//                 username: 'userLogin',
-//                 password: 'userPass'
-//             })
-//             .then(function() {
-//                 return app
-//                     .get('users/login')
-//                     .expect(200, /user does not exist/) // <---- expect alert
-//             });
-//     });
-//     it('got an incorrect password', function() {
-//         return app
-//             .post('/users/login')
-//             .type('form')
-//             .send({
-//                 username: 'userLogin',
-//                 password: 'userPass'
-//             })
-//             .then(function() {
-//                 return app
-//                     .get('users/login')
-//                     .expect(200, /incorrect password/) // <---- expect alert
-//             });
-//     });
-//     it('found user already logged in', function() {
-//         return app
-//             .post('/users/login')
-//             .type('form')
-//             .send({
-//                 username: 'userLogin',
-//                 password: 'userPass'
-//             })
-//             .then(function() {
-//                 return app
-//                     .get('users/welcome')
-//                     .expect(200, /Hi userLogin/) // <---- expect alert
-//             });
-//     });
-// });
-
-// DR's EXAMPLE WITH ADDING USER TO DB BEFORE CHECKING IT
-
-// it('should warn if user exists', function() {
+        // it('should warn if user exists', function() {
         //     return models.User.create({ username: 'MyTestUser', password: 'whatever'})
         //         .then(function() {
         //             return app
@@ -185,3 +89,5 @@ describe('login', function() {
         //                 .expect(200, /Username already exists/);
         //         });
         // });
+    });
+});
