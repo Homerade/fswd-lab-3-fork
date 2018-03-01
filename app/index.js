@@ -6,6 +6,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 import NewTask from './NewTask.vue'
+import Register from './Register.vue'
 
 Vue.use(VueAxios, axios);
 
