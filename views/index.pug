@@ -1,10 +1,6 @@
-//- views/index.pug
-extends ./layout
-
-block body
-    h1 Hello world!
-    p This is coming from the #[code views/index.pug] file
-
-    form(action="/tasks" method="post")
-        input(type="text" name="name")
-        input(type="submit" value="Submit")
+html
+    head
+        title FSWD Winter '18
+    body
+        div.container#app
+        script(src="/bundle.js")

@@ -12,7 +12,8 @@
     "coverage": "opn coverage/lcov-report/index.html",
     "sequelize": "sequelize",
     "heroku-postbuild": "sequelize db:migrate",
-    "webpack-dev": "webpack --mode development"
+    "webpack-dev": "webpack --mode development",
+    "nightwatch": "nightwatch --env chrome"
   },
   "keywords": [],
   "author": "",
@@ -37,17 +38,23 @@
     "sequelize-cli": "^3.2.0",
     "style-loader": "^0.20.2",
     "vue": "^2.5.13",
+    "vue-awesome": "^2.3.5",
     "vue-axios": "^2.0.2",
     "vue-loader": "^14.1.1",
+    "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.13",
+    "vuex": "^3.0.1",
     "webpack": "^4.0.1",
     "webpack-cli": "^2.0.9"
   },
   "devDependencies": {
+    "chromedriver": "^2.36.0",
     "eslint": "^4.7.0",
     "jest": "^22.0.0",
+    "nightwatch": "^0.9.20",
     "nodemon": "^1.14.12",
     "opn-cli": "^3.1.0",
+    "selenium-server": "^3.10.0",
     "sqlite3": "^3.1.13",
     "supertest": "^3.0.0",
     "webpack-dev-middleware": "^3.0.0"

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <form @submit.prevent="sendRegistration">
         <div class="form-group">
             <label for="username">Username</label>
             <input class="form-control" type="text" name="username" v-model="username">
@@ -12,9 +12,9 @@
             <label for="password_confirm">Password (confirm)</label>
             <input class="form-control" type="password" name="password_confirm" v-model="password_confirm">
         </div>
-        <p v-if="passwordsNoMatch">Passwords match.</p>
-        <button class="btn btn-primary" :disabled="passwordsNoMatch" @click="sendRegistration">Register</button>
-    </div>
+        <p v-if="passwordsNoMatch">Passwords do not match.</p>
+        <button class="btn btn-primary" :disabled="passwordsNoMatch">Register</button>
+    </form>
 </template>
 
 <script>
@@ -27,13 +27,20 @@ export default {
         }
     },
     computed: {
-        passswordsNoMatch: function() {
+        passwordsNoMatch: function() {
             return this.password !== this.password_confirm;
         }
     },
     methods: {
         sendRegistration: function() {
-            alert('Sending registration!');
+            this.$http.post('/users/register', {
+                username: this.username,
+                password: this.password,
+                password_confirm: this.password_confirm
+            }).then(response => {
+                this.$router.push('/welcome');
+            })
+
         }
     }
 };
