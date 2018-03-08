@@ -62,11 +62,7 @@ export default new Vuex.Store({
         deleteTask({ state, commit }, task) {
             return Vue.axios.delete(`/tasks/${task.id}`)
                 .then(response => {
-<<<<<<< HEAD
-                    commit('removeTask', task)
-=======
                     commit('removeTask', task);
->>>>>>> 625edcb63576e50aada93120dc63cee2d2579443
                 });
         }
     },
@@ -80,8 +76,4 @@ export default new Vuex.Store({
             }
         }
     }
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 625edcb63576e50aada93120dc63cee2d2579443
